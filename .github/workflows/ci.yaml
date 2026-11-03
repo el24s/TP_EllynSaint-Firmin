@@ -29,7 +29,6 @@ jobs:
   
       - name: Build et tester
         run: ./mvnw -B clean verify
-      - name: Publier le rapport de tests
       - name: Publier le .jar en artefact
         uses: actions/upload-artifact@v5
         with:
