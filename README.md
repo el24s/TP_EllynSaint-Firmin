@@ -36,8 +36,6 @@ API REST de gestion d'une petite bibliothèque (Spring Boot 3.5, Java 25, archit
 
 ---
 
-> Remplacez le contenu ci-dessous par vos réponses du TP (voir `ENONCE_TP.md`).
-
 ---
 ## Partie A — Comprendre, exécuter, tester avec Swagger (semaines 2 et 3)
 
@@ -79,17 +77,7 @@ Ces réponses vont dans votre `README.md` : branche `feature/lecture-code`, puis
 ---
 
 ## Partie B — Pipeline CI avec GitHub Actions (semaine 5)
-
-Créez `.github/workflows/ci.yml` avec les exigences suivantes :
-
-- **Déclencheurs** : `pull_request` vers `master`, `push` sur `master`, et déclenchement **manuel**.
-- **Matrice** : le job de build/test s'exécute avec **JDK 21 et JDK 25** (Temurin), avec cache Maven.
-- Une étape rend `mvnw` **exécutable** (le runner est Linux et le fichier vient de Windows), **avant** de l'utiliser.
-- Le projet est en **Java 25** (`java.version` du `pom.xml`). La ligne JDK 21 de la matrice sert seulement à vérifier la
-  **rétrocompatibilité** : pour qu'elle compile avec un JDK 21, passez la version de la matrice à Maven
-  (`-Djava.version=<version de la matrice>`).
-- Il exécute `./mvnw -B clean verify`.
-- Il publie le **`.jar`** en artefact `application-jar` (une seule fois, depuis la version JDK 25).
+- Création faite
 
 **Exigence de processus** : ce fichier est introduit **par une Pull Request** vers `master` (règles de la partie 0).
 Vérifiez que le workflow s'exécute sur la PR et qu'il est vert, fusionnez, puis **lancez-le manuellement**
