@@ -1,5 +1,6 @@
 package ca.cegep.biblio.service;
 
+import ca.cegep.biblio.controller.LivreRequest;
 import ca.cegep.biblio.exception.LivreIntrouvableException;
 import ca.cegep.biblio.model.Livre;
 import ca.cegep.biblio.repository.LivreRepository;
@@ -12,9 +13,11 @@ import java.util.List;
 public class LivreService {
 
     private final LivreRepository repository;
+    private final LivreRequest request;
 
-    public LivreService(LivreRepository repository) {
+    public LivreService(LivreRepository repository, LivreRequest request) {
         this.repository = repository;
+        this.request = request;
     }
 
     public List<Livre> lister() {
@@ -25,37 +28,39 @@ public class LivreService {
         return repository.findById(id).orElseThrow(() -> new LivreIntrouvableException(id));
     }
 
-    public Livre creer(String titre, String auteur, String isbn, int anneePublication, String categorie) {
-        if (titre == null || titre.isBlank()) {
+    public Livre creer(LivreRequest request) {
+        if (request.titre() == null || request.titre().isBlank()) {
             throw new IllegalArgumentException("Le titre est obligatoire");
         }
-        if (auteur == null || auteur.isBlank()) {
+        if (request.auteur() == null || request.auteur().isBlank()) {
             throw new IllegalArgumentException("L'auteur est obligatoire");
         }
-        if (anneePublication < 1450 || anneePublication > 2100) {
+        if (request.anneePublication() < 1450 || request.anneePublication() > 2100) {
             throw new IllegalArgumentException("L'année de publication est invalide");
         }
-        Livre livre = new Livre(null, titre, auteur, isbn, anneePublication, categorie);
+        Livre livre = new Livre(null, request.titre(), request.auteur(), request.isbn(), request.anneePublication(), request.categorie());
         return repository.save(livre);
     }
     // request needed 
-    public Livre modifier(Long id, String titre, String auteur, String isbn, int anneePublication, String categorie) {
+    public Livre modifier(Long id, LivreRequest request) {
         Livre livre = trouver(id);
         // repetition code ajouter une autre methode
-        if (titre == null || titre.isBlank()) {
+        if (request.titre() == null || request.titre().isBlank()) {
             throw new IllegalArgumentException("Le titre est obligatoire");
         }
-        if (auteur == null || auteur.isBlank()) {
+        if (request.auteur() == null || request.auteur().isBlank()) {
             throw new IllegalArgumentException("L'auteur est obligatoire");
         }
-        if (anneePublication < 1450 || anneePublication > 2100) {
+        if (request.anneePublication() < 1450 || request.anneePublication() > 2100) {
             throw new IllegalArgumentException("L'année de publication est invalide");
         }
-        livre.setTitre(titre);
-        livre.setAuteur(auteur);
-        livre.setIsbn(isbn);
-        livre.setAnneePublication(anneePublication);
-        livre.setCategorie(categorie);
+
+        livre.setTitre(request.titre());
+        livre.setAuteur(request.auteur());
+        livre.setIsbn(request.isbn());
+        livre.setAnneePublication(request.anneePublication());
+        livre.setCategorie(request.categorie());
+
         return repository.save(livre);
     }
 
