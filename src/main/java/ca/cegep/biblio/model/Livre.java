@@ -8,7 +8,7 @@ public class Livre {
     private String auteur;
     private String isbn;
     private int anneePublication;
-    private String categorie; // ROMAN, SCIENCE ou JEUNESSE
+    private String categorie; // ROMAN, SCIENCE ou JEUNESSE ENUM
     private boolean disponible = true;
 
     public Livre() {
