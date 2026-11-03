@@ -38,9 +38,10 @@ public class LivreService {
         Livre livre = new Livre(null, titre, auteur, isbn, anneePublication, categorie);
         return repository.save(livre);
     }
-
+    // request needed 
     public Livre modifier(Long id, String titre, String auteur, String isbn, int anneePublication, String categorie) {
         Livre livre = trouver(id);
+        // repetition code ajouter une autre methode
         if (titre == null || titre.isBlank()) {
             throw new IllegalArgumentException("Le titre est obligatoire");
         }
