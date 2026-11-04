@@ -88,7 +88,6 @@ depuis l'onglet **Actions** pour confirmer le déclencheur manuel.
 ---
 
 ## Partie C — Tests unitaires et JaCoCo (semaines 4 et 5)
-   **Implémentez-les**. Voici ce qui est attendu :
    - **1 test simple** (sans mock) : un calcul de frais de retard avec plafond ;
    - **1 test sur une exception** (`assertThrows`, semaine 4 §3) : un livre déjà emprunté ;
    - **1 test avec mock** (Mockito, semaine 4 §5) : isolez `LivreService` de `LivreRepository` avec un `@Mock`,
@@ -97,19 +96,13 @@ depuis l'onglet **Actions** pour confirmer le déclencheur manuel.
 ---
 
 ## Partie D — Code smells (semaine 6)
-
-Le code contient **3 à 4 code smells** du catalogue de la semaine 6.
-
 1. **Identifiez-les** : dans un tableau du `README.md`, indiquez pour chacun le nom du smell, le fichier, les
    lignes, et pourquoi c'est un problème.
-2. **Corrigez-les** avec les réusinages de la semaine 6, **un commit par smell**.
-3. Après chaque correction, relancez `./mvnw verify` : les tests doivent rester **verts**.
-   (Si vous changez la signature d'une méthode, adaptez les tests concernés dans un commit à part.)
+Long Parameter List - LivreService & LivreController - Lignes 42 - 57 & 51 et 57 - C'est un problème, car cela rend la signature de la méthode trop longue, l'ordre des paramètres est facile à inverser et plus tard si on veut modifier les paramêtre qu'ils prends il faut modifier manuellement toutes les méthode à la place de juste LivreRequest
 
-> Rappel : réusiner ne change **pas** le comportement observable de l'API.
+Duplicated Code - LivreService - Lignes 30 - 40 - C'est un problème, car on récrivait ce même code dans deux méthodes différentes et prochainement si une modification est nécessaire cela signifie qu'il faut modfier ce même code à deux endroits à la place de modifier une méthode seulement qui est réutiliser dans les autres méthodes.
 
-Branche `refactor/code-smells`, Pull Request, build vert, fusion.
-
+Repeated Switch/If Chains - LivreService & LivreCategorie - Ligne 86 & Everything - C'est un problème, car c'était un code presque identique répété plusieurs fois, alors en centralisant cela dans LivreCategorie et en créant l'enum cela permet de réduire les erreurs potentielles au moment de modifier une information à plusieurs endroits et elle rend le changement des paramètres de chaque categorie plus simple.
 ---
 
 ## Partie E — Docker, Codespaces, GHCR, SemVer, Release (semaines 7 et 8)
