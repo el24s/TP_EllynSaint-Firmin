@@ -47,15 +47,13 @@ public class LivreController {
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Ajouter un livre")
     public Livre creer(@RequestBody LivreRequest requete) {
-        return service.creer(requete.titre(), requete.auteur(), requete.isbn(),
-                requete.anneePublication(), requete.categorie());
+        return service.creer(requete);
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Modifier un livre")
     public Livre modifier(@PathVariable Long id, @RequestBody LivreRequest requete) {
-        return service.modifier(id, requete.titre(), requete.auteur(), requete.isbn(),
-                requete.anneePublication(), requete.categorie());
+        return service.modifier(id, requete);
     }
 
     @DeleteMapping("/{id}")
