@@ -1,5 +1,6 @@
 package ca.cegep.biblio.controller;
 
+import ca.cegep.biblio.dto.LivreRequest;
 import ca.cegep.biblio.model.Livre;
 import ca.cegep.biblio.service.LivreService;
 import io.swagger.v3.oas.annotations.Operation;

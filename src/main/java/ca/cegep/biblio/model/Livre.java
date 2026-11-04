@@ -8,13 +8,13 @@ public class Livre {
     private String auteur;
     private String isbn;
     private int anneePublication;
-    private String categorie; // ROMAN, SCIENCE ou JEUNESSE ENUM
+    private LivreCategorie categorie; // ROMAN, SCIENCE ou JEUNESSE
     private boolean disponible = true;
 
     public Livre() {
     }
 
-    public Livre(Long id, String titre, String auteur, String isbn, int anneePublication, String categorie) {
+    public Livre(Long id, String titre, String auteur, String isbn, int anneePublication, LivreCategorie categorie) {
         this.id = id;
         this.titre = titre;
         this.auteur = auteur;
@@ -63,11 +63,11 @@ public class Livre {
         this.anneePublication = anneePublication;
     }
 
-    public String getCategorie() {
+    public LivreCategorie getCategorie() {
         return categorie;
     }
 
-    public void setCategorie(String categorie) {
+    public void setCategorie(LivreCategorie categorie) {
         this.categorie = categorie;
     }
 

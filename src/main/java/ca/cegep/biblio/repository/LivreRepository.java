@@ -1,6 +1,8 @@
 package ca.cegep.biblio.repository;
 
 import ca.cegep.biblio.model.Livre;
+import ca.cegep.biblio.model.LivreCategorie;
+
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -17,9 +19,9 @@ public class LivreRepository {
     private long prochainId = 1;
 
     public LivreRepository() {
-        save(new Livre(null, "Le Petit Prince", "Antoine de Saint-Exupéry", "9782070612758", 1943, "JEUNESSE"));
-        save(new Livre(null, "Une brève histoire du temps", "Stephen Hawking", "9782080812117", 1988, "SCIENCE"));
-        save(new Livre(null, "Bonheur d'occasion", "Gabrielle Roy", "9782890523982", 1945, "ROMAN"));
+        save(new Livre(null, "Le Petit Prince", "Antoine de Saint-Exupéry", "9782070612758", 1943, LivreCategorie.JEUNESSE));
+        save(new Livre(null, "Une brève histoire du temps", "Stephen Hawking", "9782080812117", 1988, LivreCategorie.SCIENCE));
+        save(new Livre(null, "Bonheur d'occasion", "Gabrielle Roy", "9782890523982", 1945, LivreCategorie.ROMAN));
     }
 
     public List<Livre> findAll() {

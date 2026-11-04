@@ -1,8 +1,9 @@
 package ca.cegep.biblio.service;
 
-import ca.cegep.biblio.controller.LivreRequest;
+import ca.cegep.biblio.dto.LivreRequest;
 import ca.cegep.biblio.exception.LivreIntrouvableException;
 import ca.cegep.biblio.model.Livre;
+import ca.cegep.biblio.model.LivreCategorie;
 import ca.cegep.biblio.repository.LivreRepository;
 import org.springframework.stereotype.Service;
 
@@ -81,26 +82,7 @@ public class LivreService {
         return repository.save(livre);
     }
 
-    public double calculerFraisRetard(String categorie, int joursRetard) {
-        double frais = 0;
-        if (joursRetard > 0) {
-            if (categorie.equals("JEUNESSE")) {
-                frais = joursRetard * 0.10;
-                if (frais > 5) {
-                    frais = 5;
-                }
-            } else if (categorie.equals("SCIENCE")) {
-                frais = joursRetard * 0.50;
-                if (frais > 20) {
-                    frais = 20;
-                }
-            } else {
-                frais = joursRetard * 0.25;
-                if (frais > 10) {
-                    frais = 10;
-                }
-            }
-        }
-        return frais;
+    public double calculerFraisRetard(LivreCategorie categorie, int joursRetard) {
+        return categorie.calculerFraisRetard(joursRetard);
     }
 }
