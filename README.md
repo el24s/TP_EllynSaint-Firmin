@@ -59,11 +59,12 @@ depuis l'onglet **Actions** pour confirmer le déclencheur manuel.
 ## Partie D — Code smells (semaine 6)
 1. **Identifiez-les** : dans un tableau du `README.md`, indiquez pour chacun le nom du smell, le fichier, les
    lignes, et pourquoi c'est un problème.
-Long Parameter List - LivreService & LivreController - Lignes 42 - 57 & 51 et 57 - C'est un problème, car cela rend la signature de la méthode trop longue, l'ordre des paramètres est facile à inverser et plus tard si on veut modifier les paramêtre qu'ils prends il faut modifier manuellement toutes les méthode à la place de juste LivreRequest
+   
+- Long Parameter List - LivreService & LivreController - Lignes 42 - 57 & 51 et 57 - C'est un problème, car cela rend la signature de la méthode trop longue, l'ordre des paramètres est facile à inverser et plus tard si on veut modifier les paramêtre qu'ils prends il faut modifier manuellement toutes les méthode à la place de juste LivreRequest
 
-Duplicated Code - LivreService - Lignes 30 - 40 - C'est un problème, car on récrivait ce même code dans deux méthodes différentes et prochainement si une modification est nécessaire cela signifie qu'il faut modfier ce même code à deux endroits à la place de modifier une méthode seulement qui est réutiliser dans les autres méthodes.
+- Duplicated Code - LivreService - Lignes 30 - 40 - C'est un problème, car on récrivait ce même code dans deux méthodes différentes et prochainement si une modification est nécessaire cela signifie qu'il faut modfier ce même code à deux endroits à la place de modifier une méthode seulement qui est réutiliser dans les autres méthodes.
 
-Repeated Switch/If Chains - LivreService & LivreCategorie - Ligne 86 & Everything - C'est un problème, car c'était un code presque identique répété plusieurs fois, alors en centralisant cela dans LivreCategorie et en créant l'enum cela permet de réduire les erreurs potentielles au moment de modifier une information à plusieurs endroits et elle rend le changement des paramètres de chaque categorie plus simple.
+- Repeated Switch/If Chains - LivreService & LivreCategorie - Ligne 86 & Everything - C'est un problème, car c'était un code presque identique répété plusieurs fois, alors en centralisant cela dans LivreCategorie et en créant l'enum cela permet de réduire les erreurs potentielles au moment de modifier une information à plusieurs endroits et elle rend le changement des paramètres de chaque categorie plus simple.
 ---
 
 ## Partie E — Docker, Codespaces, GHCR, SemVer, Release (semaines 7 et 8)
@@ -90,4 +91,4 @@ puis ajoutez, **uniquement sur un tag `vX.Y.Z`** :
 ### E.5 Versionner et livrer
 1. Assurez-vous que la `<version>` du `pom.xml` correspond à votre tag.
 2. Après vos corrections de smells (partie D), **choisissez le bon numéro** de la prochaine version
-C'est un numéro de version MAJEUR, car j'ai rajouté des fonctionnalités et apporté un correctif et cela a affecter l'expérience client qui maintenant doit donner moins d'informations pour le livre elle doit juste tout donner. De plus, ces anciennes requêtes ne sont plus compatibles avec le système, alors c'est un problème MAJEUR.
+- C'est un numéro de version MAJEUR, car j'ai rajouté des fonctionnalités et apporté un correctif et cela a affecter l'expérience client qui maintenant doit donner moins d'informations pour le livre elle doit juste tout donner. De plus, ces anciennes requêtes ne sont plus compatibles avec le système, alors c'est un problème MAJEUR.
