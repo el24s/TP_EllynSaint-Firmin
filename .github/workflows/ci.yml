@@ -65,7 +65,7 @@ jobs:
         with:
           registry: ${{ vars.REGISTRY }}
           username: ${{ vars.GHCR_USERNAME }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.TOKEN_TOKEN }}
 
       - uses: docker/setup-buildx-action@v3
 
