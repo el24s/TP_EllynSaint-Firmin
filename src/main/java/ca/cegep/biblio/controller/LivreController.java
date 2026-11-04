@@ -1,5 +1,6 @@
 package ca.cegep.biblio.controller;
 
+import ca.cegep.biblio.dto.LivreRequest;
 import ca.cegep.biblio.model.Livre;
 import ca.cegep.biblio.service.LivreService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -47,15 +48,13 @@ public class LivreController {
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Ajouter un livre")
     public Livre creer(@RequestBody LivreRequest requete) {
-        return service.creer(requete.titre(), requete.auteur(), requete.isbn(),
-                requete.anneePublication(), requete.categorie());
+        return service.creer(requete);
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Modifier un livre")
     public Livre modifier(@PathVariable Long id, @RequestBody LivreRequest requete) {
-        return service.modifier(id, requete.titre(), requete.auteur(), requete.isbn(),
-                requete.anneePublication(), requete.categorie());
+        return service.modifier(id, requete);
     }
 
     @DeleteMapping("/{id}")
@@ -82,7 +81,6 @@ public class LivreController {
     public Map<String, Object> fraisRetard(@PathVariable Long id, @RequestParam int joursRetard) {
         Livre livre = service.trouver(id);
         double frais = service.calculerFraisRetard(livre.getCategorie(), joursRetard);
-        // pt retour livre complet...?
         return Map.of("livreId", id, "joursRetard", joursRetard, "frais", frais);
     }
 }

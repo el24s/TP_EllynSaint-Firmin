@@ -13,7 +13,7 @@
 
     <groupId>ca.cegep</groupId>
     <artifactId>biblio-api</artifactId>
-    <version>1.0.0</version>
+    <version>v1.0.1</version>
     <name>biblio-api</name>
     <description>API de gestion d'une petite bibliothèque (TP maintenance logicielle)</description>
 
@@ -46,6 +46,26 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.14</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
