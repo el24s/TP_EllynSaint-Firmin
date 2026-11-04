@@ -13,11 +13,9 @@ import java.util.List;
 public class LivreService {
 
     private final LivreRepository repository;
-    private final LivreRequest request;
 
-    public LivreService(LivreRepository repository, LivreRequest request) {
+    public LivreService(LivreRepository repository) {
         this.repository = repository;
-        this.request = request;
     }
 
     public List<Livre> lister() {
@@ -28,8 +26,8 @@ public class LivreService {
         return repository.findById(id).orElseThrow(() -> new LivreIntrouvableException(id));
     }
 
-    public Livre creer(LivreRequest request) {
-        if (request.titre() == null || request.titre().isBlank()) {
+    public void verificationBase(LivreRequest request) {
+       if (request.titre() == null || request.titre().isBlank()) {
             throw new IllegalArgumentException("Le titre est obligatoire");
         }
         if (request.auteur() == null || request.auteur().isBlank()) {
@@ -37,23 +35,19 @@ public class LivreService {
         }
         if (request.anneePublication() < 1450 || request.anneePublication() > 2100) {
             throw new IllegalArgumentException("L'année de publication est invalide");
-        }
+        } 
+    }
+
+    public Livre creer(LivreRequest request) {
+        verificationBase(request);
+
         Livre livre = new Livre(null, request.titre(), request.auteur(), request.isbn(), request.anneePublication(), request.categorie());
         return repository.save(livre);
     }
-    // request needed 
+
     public Livre modifier(Long id, LivreRequest request) {
         Livre livre = trouver(id);
-        // repetition code ajouter une autre methode
-        if (request.titre() == null || request.titre().isBlank()) {
-            throw new IllegalArgumentException("Le titre est obligatoire");
-        }
-        if (request.auteur() == null || request.auteur().isBlank()) {
-            throw new IllegalArgumentException("L'auteur est obligatoire");
-        }
-        if (request.anneePublication() < 1450 || request.anneePublication() > 2100) {
-            throw new IllegalArgumentException("L'année de publication est invalide");
-        }
+        verificationBase(request);
 
         livre.setTitre(request.titre());
         livre.setAuteur(request.auteur());
