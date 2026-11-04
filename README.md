@@ -72,8 +72,6 @@ Exécutez ces scénarios et notez le code HTTP obtenu ainsi que le résultat et 
 | 4 | `POST /api/livres/1/emprunter` deux fois de suite | 200 puis 409 | Le livre est disponible, alors il peut être emprunter, puis il y a une erreur, car il est déjà emprunter
 | 5 | `GET /api/livres/2/frais-retard?joursRetard=100` | Notez le montant : il vous servira pour la partie C | 200 OK | 20$ - La requête à marcher les frais sont de 20$ 
 
-Ces réponses vont dans votre `README.md` : branche `feature/lecture-code`, puis Pull Request (voir les règles de la partie 0).
-
 ---
 
 ## Partie B — Pipeline CI avec GitHub Actions (semaine 5)
@@ -88,45 +86,21 @@ depuis l'onglet **Actions** pour confirmer le déclencheur manuel.
 ---
 
 ## Partie C — Tests unitaires et JaCoCo (semaines 4 et 5)
-
-1. Étudiez le test fourni `LivreRepositoryTest` (modèle Arrange / Act / Assert).
-2. Le fichier `LivreServiceTest` contient 3 **squelettes de tests** annotés `@Disabled`, avec en commentaire ce qu'il faut tester.
-   **Implémentez-les**. Voici ce qui est attendu :
    - **1 test simple** (sans mock) : un calcul de frais de retard avec plafond ;
    - **1 test sur une exception** (`assertThrows`, semaine 4 §3) : un livre déjà emprunté ;
    - **1 test avec mock** (Mockito, semaine 4 §5) : isolez `LivreService` de `LivreRepository` avec un `@Mock`,
      définissez son comportement (`when(...).thenReturn(...)`) et **vérifiez les interactions**
      (`verify(...)`) — par exemple que `save` est bien appelé lors d'un emprunt.
-
-   Nommez-les clairement (`methode_condition_resultat`) et suivez le modèle Arrange / Act / Assert.
-   Mockito est déjà inclus dans `spring-boot-starter-test` : aucune dépendance à ajouter.
-3. Ajoutez le plugin **JaCoCo** au `pom.xml` (voir semaine 5) et générez le rapport :
-   ```bash
-   ./mvnw clean verify
-   # rapport : target/site/jacoco/index.html
-   ```
-   >  La version `0.8.12` de la note de cours **ne supporte pas Java 25**. Utilisez **0.8.14**.
-   > Le rapport doit être généré pendant la phase `test`/`verify` (ajoutez l'exécution `report`).
-4. Modifiez votre workflow pour qu'il publie aussi le **rapport JaCoCo** en artefact, **même si les tests échouent**.
-
-Branche `feature/tests-jacoco`, Pull Request, build vert, fusion.
-
 ---
 
 ## Partie D — Code smells (semaine 6)
-
-Le code contient **3 à 4 code smells** du catalogue de la semaine 6.
-
 1. **Identifiez-les** : dans un tableau du `README.md`, indiquez pour chacun le nom du smell, le fichier, les
    lignes, et pourquoi c'est un problème.
-2. **Corrigez-les** avec les réusinages de la semaine 6, **un commit par smell**.
-3. Après chaque correction, relancez `./mvnw verify` : les tests doivent rester **verts**.
-   (Si vous changez la signature d'une méthode, adaptez les tests concernés dans un commit à part.)
+Long Parameter List - LivreService & LivreController - Lignes 42 - 57 & 51 et 57 - C'est un problème, car cela rend la signature de la méthode trop longue, l'ordre des paramètres est facile à inverser et plus tard si on veut modifier les paramêtre qu'ils prends il faut modifier manuellement toutes les méthode à la place de juste LivreRequest
 
-> Rappel : réusiner ne change **pas** le comportement observable de l'API.
+Duplicated Code - LivreService - Lignes 30 - 40 - C'est un problème, car on récrivait ce même code dans deux méthodes différentes et prochainement si une modification est nécessaire cela signifie qu'il faut modfier ce même code à deux endroits à la place de modifier une méthode seulement qui est réutiliser dans les autres méthodes.
 
-Branche `refactor/code-smells`, Pull Request, build vert, fusion.
-
+Repeated Switch/If Chains - LivreService & LivreCategorie - Ligne 86 & Everything - C'est un problème, car c'était un code presque identique répété plusieurs fois, alors en centralisant cela dans LivreCategorie et en créant l'enum cela permet de réduire les erreurs potentielles au moment de modifier une information à plusieurs endroits et elle rend le changement des paramètres de chaque categorie plus simple.
 ---
 
 ## Partie E — Docker, Codespaces, GHCR, SemVer, Release (semaines 7 et 8)
