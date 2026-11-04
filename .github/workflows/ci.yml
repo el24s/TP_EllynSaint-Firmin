@@ -10,7 +10,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  # JOB 1 : tests (toujours exécuté)
   build-and-test:
     runs-on: ubuntu-latest
     strategy:
@@ -35,7 +34,7 @@ jobs:
       - name: Publier le rapport JaCoCo
         uses: actions/upload-artifact@v5
         with:
-          name: rapport-jacoco-jdk${{ matrix.java-version }}
+          name: rapport-jacoco
           path: target/site/jacoco/
 
       - name: Publier le .jar (JDK 21 seulement)
