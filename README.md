@@ -88,9 +88,7 @@ depuis l'onglet **Actions** pour confirmer le déclencheur manuel.
 ## Partie C — Tests unitaires et JaCoCo (semaines 4 et 5)
    - **1 test simple** (sans mock) : un calcul de frais de retard avec plafond ;
    - **1 test sur une exception** (`assertThrows`, semaine 4 §3) : un livre déjà emprunté ;
-   - **1 test avec mock** (Mockito, semaine 4 §5) : isolez `LivreService` de `LivreRepository` avec un `@Mock`,
-     définissez son comportement (`when(...).thenReturn(...)`) et **vérifiez les interactions**
-     (`verify(...)`) — par exemple que `save` est bien appelé lors d'un emprunt.
+   - **1 test avec mock** (Mockito, semaine 4 §5) : isolez `LivreService` de `LivreRepository` avec un `@Mock`
 ---
 
 ## Partie D — Code smells (semaine 6)
@@ -106,19 +104,16 @@ Repeated Switch/If Chains - LivreService & LivreCategorie - Ligne 86 & Everythin
 ## Partie E — Docker, Codespaces, GHCR, SemVer, Release (semaines 7 et 8)
 
 ### E.1 Dockerfile
-Écrivez un `Dockerfile` **« exécution seulement »** (semaine 7, Option A) :
-image de base **JRE** légère, **utilisateur non-root**, port 8080 documenté, **utilise le `.jar` déjà
-construit par le workflow** (aucune recompilation dans l'image). Ajoutez un `.dockerignore`.
-
-> Attention : un `.dockerignore` qui exclut tout le dossier `target/` empêcherait `COPY target/*.jar`
-> de trouver le `.jar`. Réfléchissez à ce qu'il faut exclure — et à ce qu'il faut garder.
+Écrivez un `Dockerfile` **« exécution seulement »**
 
 ### E.2 Tester le Dockerfile dans GitHub Codespaces
-1. Ouvrez votre dépôt dans un **Codespace** (*Code → Codespaces → Create codespace*, sur votre branche de travail).
-2. Construisez le `.jar` dans le Codespace avec `./mvnw -B package` (le workflow, lui, produit et réutilise ce même `.jar` automatiquement pour construire l'image lors d'un tag).
-3. Construisez l'image, démarrez un conteneur en arrière-plan avec le bon mappage de ports, puis
-   validez avec une vraie requête (`curl`) **et** avec Swagger via le port redirigé par Codespaces.
-4. Notez dans le `README.md` les commandes utilisées.
+1. Ouvrez votre dépôt dans un **Codespace**
+- ./mvnw -B package
+- Build l'image avec docker build -t biblio:1.0 .
+- Run le conteneur avec docker run -d -p 8080:8080 --name biblio biblio:1.0
+- Vérifier que le conteneur roule avec docker ps -a (j'aime juste le faire avec -a même si que ce n'est pas nécessaire dans ce cas)
+- Valider la requête (curl) avec curl http:localhost:8080/api/livres
+- Valider Swagger avec https://stunning-fiesta-4jw9gp6x99rg3j94p-8080.app.github.dev/swagger-ui/index.html
 
 ### E.3 Variables et secrets
 Le workflow a besoin du registre, de votre nom d'utilisateur et d'un jeton d'accès pour publier sur GHCR. **Aucune de ces valeurs ne doit être écrite en dur dans le YAML** : à vous de choisir ce qui doit être une variable ou un secret, de les créer et de les utiliser dans le workflow.
