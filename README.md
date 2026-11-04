@@ -72,8 +72,6 @@ Exécutez ces scénarios et notez le code HTTP obtenu ainsi que le résultat et 
 | 4 | `POST /api/livres/1/emprunter` deux fois de suite | 200 puis 409 | Le livre est disponible, alors il peut être emprunter, puis il y a une erreur, car il est déjà emprunter
 | 5 | `GET /api/livres/2/frais-retard?joursRetard=100` | Notez le montant : il vous servira pour la partie C | 200 OK | 20$ - La requête à marcher les frais sont de 20$ 
 
-Ces réponses vont dans votre `README.md` : branche `feature/lecture-code`, puis Pull Request (voir les règles de la partie 0).
-
 ---
 
 ## Partie B — Pipeline CI avec GitHub Actions (semaine 5)
