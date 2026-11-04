@@ -29,8 +29,15 @@ jobs:
   
       - name: Build et tester
         run: ./mvnw -B clean verify
+
       - name: Publier le .jar en artefact
         uses: actions/upload-artifact@v5
         with:
           name: rapport-surefire
           path: target/surefire-reports/
+          
+      - name: Publier le rapport de tests
+        uses: actions/upload-artifact@v5
+        with:
+          name: rapport-jacoco
+          path: target/site/jacoco/index.html
