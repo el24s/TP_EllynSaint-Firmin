@@ -1,6 +1,5 @@
 package ca.cegep.biblio.service;
 
-import ca.cegep.biblio.exception.GestionnaireErreurs;
 import ca.cegep.biblio.model.Livre;
 import ca.cegep.biblio.model.LivreCategorie;
 import ca.cegep.biblio.repository.LivreRepository;
@@ -10,7 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -18,13 +16,11 @@ import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpStatus;
 
 /**
  * TP partie C : à vous d'implémenter les 3 tests ci-dessous.
@@ -55,7 +51,7 @@ class LivreServiceTest {
 
     @Test
     void emprunter_livreDejaEmprunte_lanceIllegalStateException() {
-        // DONE À tester : emprunter un livre dont disponible == false lance une IllegalStateException.
+        /// DONE À tester : emprunter un livre dont disponible == false lance une IllegalStateException.
         // Indice : le repository (mock) doit retourner ce livre pour son id.
         /// Arrange
         Livre livre = new Livre();
