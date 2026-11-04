@@ -88,29 +88,12 @@ depuis l'onglet **Actions** pour confirmer le déclencheur manuel.
 ---
 
 ## Partie C — Tests unitaires et JaCoCo (semaines 4 et 5)
-
-1. Étudiez le test fourni `LivreRepositoryTest` (modèle Arrange / Act / Assert).
-2. Le fichier `LivreServiceTest` contient 3 **squelettes de tests** annotés `@Disabled`, avec en commentaire ce qu'il faut tester.
    **Implémentez-les**. Voici ce qui est attendu :
    - **1 test simple** (sans mock) : un calcul de frais de retard avec plafond ;
    - **1 test sur une exception** (`assertThrows`, semaine 4 §3) : un livre déjà emprunté ;
    - **1 test avec mock** (Mockito, semaine 4 §5) : isolez `LivreService` de `LivreRepository` avec un `@Mock`,
      définissez son comportement (`when(...).thenReturn(...)`) et **vérifiez les interactions**
      (`verify(...)`) — par exemple que `save` est bien appelé lors d'un emprunt.
-
-   Nommez-les clairement (`methode_condition_resultat`) et suivez le modèle Arrange / Act / Assert.
-   Mockito est déjà inclus dans `spring-boot-starter-test` : aucune dépendance à ajouter.
-3. Ajoutez le plugin **JaCoCo** au `pom.xml` (voir semaine 5) et générez le rapport :
-   ```bash
-   ./mvnw clean verify
-   # rapport : target/site/jacoco/index.html
-   ```
-   >  La version `0.8.12` de la note de cours **ne supporte pas Java 25**. Utilisez **0.8.14**.
-   > Le rapport doit être généré pendant la phase `test`/`verify` (ajoutez l'exécution `report`).
-4. Modifiez votre workflow pour qu'il publie aussi le **rapport JaCoCo** en artefact, **même si les tests échouent**.
-
-Branche `feature/tests-jacoco`, Pull Request, build vert, fusion.
-
 ---
 
 ## Partie D — Code smells (semaine 6)

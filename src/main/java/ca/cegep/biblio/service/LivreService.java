@@ -1,7 +1,9 @@
 package ca.cegep.biblio.service;
 
+import ca.cegep.biblio.dto.LivreRequest;
 import ca.cegep.biblio.exception.LivreIntrouvableException;
 import ca.cegep.biblio.model.Livre;
+import ca.cegep.biblio.model.LivreCategorie;
 import ca.cegep.biblio.repository.LivreRepository;
 import org.springframework.stereotype.Service;
 
@@ -25,37 +27,35 @@ public class LivreService {
         return repository.findById(id).orElseThrow(() -> new LivreIntrouvableException(id));
     }
 
-    public Livre creer(String titre, String auteur, String isbn, int anneePublication, String categorie) {
-        if (titre == null || titre.isBlank()) {
+    public void verificationBase(LivreRequest request) {
+       if (request.titre() == null || request.titre().isBlank()) {
             throw new IllegalArgumentException("Le titre est obligatoire");
         }
-        if (auteur == null || auteur.isBlank()) {
+        if (request.auteur() == null || request.auteur().isBlank()) {
             throw new IllegalArgumentException("L'auteur est obligatoire");
         }
-        if (anneePublication < 1450 || anneePublication > 2100) {
+        if (request.anneePublication() < 1450 || request.anneePublication() > 2100) {
             throw new IllegalArgumentException("L'année de publication est invalide");
-        }
-        Livre livre = new Livre(null, titre, auteur, isbn, anneePublication, categorie);
+        } 
+    }
+
+    public Livre creer(LivreRequest request) {
+        verificationBase(request);
+
+        Livre livre = new Livre(null, request.titre(), request.auteur(), request.isbn(), request.anneePublication(), request.categorie());
         return repository.save(livre);
     }
-    // request needed 
-    public Livre modifier(Long id, String titre, String auteur, String isbn, int anneePublication, String categorie) {
+
+    public Livre modifier(Long id, LivreRequest request) {
         Livre livre = trouver(id);
-        // repetition code ajouter une autre methode
-        if (titre == null || titre.isBlank()) {
-            throw new IllegalArgumentException("Le titre est obligatoire");
-        }
-        if (auteur == null || auteur.isBlank()) {
-            throw new IllegalArgumentException("L'auteur est obligatoire");
-        }
-        if (anneePublication < 1450 || anneePublication > 2100) {
-            throw new IllegalArgumentException("L'année de publication est invalide");
-        }
-        livre.setTitre(titre);
-        livre.setAuteur(auteur);
-        livre.setIsbn(isbn);
-        livre.setAnneePublication(anneePublication);
-        livre.setCategorie(categorie);
+        verificationBase(request);
+
+        livre.setTitre(request.titre());
+        livre.setAuteur(request.auteur());
+        livre.setIsbn(request.isbn());
+        livre.setAnneePublication(request.anneePublication());
+        livre.setCategorie(request.categorie());
+
         return repository.save(livre);
     }
 
@@ -82,26 +82,7 @@ public class LivreService {
         return repository.save(livre);
     }
 
-    public double calculerFraisRetard(String categorie, int joursRetard) {
-        double frais = 0;
-        if (joursRetard > 0) {
-            if (categorie.equals("JEUNESSE")) {
-                frais = joursRetard * 0.10;
-                if (frais > 5) {
-                    frais = 5;
-                }
-            } else if (categorie.equals("SCIENCE")) {
-                frais = joursRetard * 0.50;
-                if (frais > 20) {
-                    frais = 20;
-                }
-            } else {
-                frais = joursRetard * 0.25;
-                if (frais > 10) {
-                    frais = 10;
-                }
-            }
-        }
-        return frais;
+    public double calculerFraisRetard(LivreCategorie categorie, int joursRetard) {
+        return categorie.calculerFraisRetard(joursRetard);
     }
 }

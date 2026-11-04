@@ -1,6 +1,8 @@
 package ca.cegep.biblio.repository;
 
 import ca.cegep.biblio.model.Livre;
+import ca.cegep.biblio.model.LivreCategorie;
+
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -13,7 +15,7 @@ class LivreRepositoryTest {
     void save_attribueUnIdALUnNouveauLivre() {
         // Arrange
         LivreRepository repository = new LivreRepository();
-        Livre nouveau = new Livre(null, "Dune", "Frank Herbert", "9782266320481", 1965, "ROMAN");
+        Livre nouveau = new Livre(null, "Dune", "Frank Herbert", "9782266320481", 1965, LivreCategorie.ROMAN);
 
         // Act
         Livre sauvegarde = repository.save(nouveau);
