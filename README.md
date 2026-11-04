@@ -1,41 +1,6 @@
 # biblio-api
 
 API REST de gestion d'une petite bibliothèque (Spring Boot 3.5, Java 25, architecture MVC).
-
-## Démarrer
-
-```bash
-./mvnw spring-boot:run
-```
-
-- Swagger UI : http://localhost:8080/swagger-ui.html
-- Les données sont gardées **en mémoire** (perdues à l'arrêt).
-
-## Structure
-
-| Package | Rôle |
-|---|---|
-| `model` | Le modèle : `Livre` |
-| `repository` | Accès aux données (en mémoire) |
-| `service` | Logique métier |
-| `controller` | Contrôleur REST (+ `LivreRequest`, corps JSON des requêtes) |
-| `exception` | Exceptions et traduction en codes HTTP |
-
-## Endpoints
-
-| Méthode | URL | Description |
-|---|---|---|
-| GET | `/api/livres` | Lister les livres |
-| GET | `/api/livres/{id}` | Obtenir un livre |
-| POST | `/api/livres` | Ajouter un livre |
-| PUT | `/api/livres/{id}` | Modifier un livre |
-| DELETE | `/api/livres/{id}` | Supprimer un livre |
-| POST | `/api/livres/{id}/emprunter` | Emprunter un livre |
-| POST | `/api/livres/{id}/retourner` | Retourner un livre |
-| GET | `/api/livres/{id}/frais-retard?joursRetard=N` | Frais de retard en $ |
-
----
-
 ---
 ## Partie A — Comprendre, exécuter, tester avec Swagger (semaines 2 et 3)
 
@@ -116,54 +81,13 @@ Repeated Switch/If Chains - LivreService & LivreCategorie - Ligne 86 & Everythin
 - Valider Swagger avec https://stunning-fiesta-4jw9gp6x99rg3j94p-8080.app.github.dev/swagger-ui/index.html
 
 ### E.3 Variables et secrets
-Le workflow a besoin du registre, de votre nom d'utilisateur et d'un jeton d'accès pour publier sur GHCR. **Aucune de ces valeurs ne doit être écrite en dur dans le YAML** : à vous de choisir ce qui doit être une variable ou un secret, de les créer et de les utiliser dans le workflow.
+Le workflow a besoin du registre, de votre nom d'utilisateur et d'un jeton d'accès pour publier sur GHCR.
 
 ### E.4 Publication automatique sur GHCR avec versionnage SemVer
 Modifiez le workflow (par Pull Request, comme toujours) pour qu'il se déclenche aussi sur le **push d'un tag `v*.*.*`**,
 puis ajoutez, **uniquement sur un tag `vX.Y.Z`** :
 
-- un job qui **dépend** du job de tests (`needs`), télécharge l'artefact `application-jar`,
-  se connecte à GHCR avec les variables/secrets ci-dessus, **construit et pousse** l'image automatiquement ;
-- des **tags d'image conformes à SemVer**, déduits du tag Git qui a déclenché le workflow : pour le tag `v1.2.3`,
-  l'image est `ghcr.io/<utilisateur>/biblio-api:v1.2.3` (utilisez le contexte `github.ref_name` ;
-  aucune valeur codée en dur, aucune publication hors tag). **Vous devez donc créer et pousser le tag Git avant**
-  que l'image soit construite ;
-- un job qui crée automatiquement une **Release GitHub** portant le **numéro du tag**, avec le `.jar` en pièce jointe
-  (`permissions: contents: write` — semaine 8).
-
 ### E.5 Versionner et livrer
-1. Assurez-vous que la `<version>` du `pom.xml` correspond à votre tag. Une fois la PR fusionnée,
-   créez et poussez le tag **`v1.0.0`** sur `master` (les tags ne passent pas par une PR, mais ne se posent que sur un `master` vert).
+1. Assurez-vous que la `<version>` du `pom.xml` correspond à votre tag.
 2. Après vos corrections de smells (partie D), **choisissez le bon numéro** de la prochaine version
-   (SemVer, semaine 8), mettez le `pom.xml` à jour (par PR), puis créez et poussez ce nouveau tag.
-   Justifiez votre choix dans le `README.md` (MAJEUR, MINEUR ou CORRECTIF ? pourquoi ?).
-3. Vérifiez : onglet **Packages** (images et tags), onglet **Releases**, et `docker pull` d'une des images dans Codespaces
-   (connexion avec `docker login ghcr.io` et votre token).
-
----
-
-## Partie F — Remise
-
-Aucun fichier à téléverser : je (`sfostine`) dois avoir accès à votre dépôt **`TP3_NomEtudiant`**, qui contient :
-
-- le code final, les tests, le `pom.xml` avec JaCoCo, le `Dockerfile`, le `.dockerignore`, `ci.yml` ;
-- un `README.md` avec : réponses de la partie A, couverture JaCoCo (C), tableau des smells (D),
-  commandes Codespaces (E.2), justification des numéros de version (E.5) ;
-- les **liens** : une exécution réussie du workflow (matrice 21 et 25), vos Pull Request fusionnées
-  (avec `sfostine` en reviewer et un build vert), la page **Releases**, la page **Packages** (GHCR).
-
----
-
-## Barème (100 points)
-
-| Critère | Points |
-|---|---|
-| A — Lecture de code et tests Swagger | 10 |
-| B — Pipeline : déclencheurs, matrice 21/25, artefact jar, introduit par PR | 15 |
-| C — 3 tests (1 simple, 1 exception, 1 mock) + rapport JaCoCo fonctionnel + interprétation | 15 |
-| D — Smells correctement identifiés et corrigés, tests toujours verts | 15 |
-| E — Dockerfile (bonnes pratiques), test Codespaces, variables/secrets, image GHCR automatique | 25 |
-| E — Tag d'image = tag SemVer + Release automatique + justification des versions | 10 |
-| Processus Git : aucun push direct sur `master`, branches, commits atomiques, PR avec `sfostine` en reviewer, merge seulement si build vert | 10 |
-
-
+C'est un numéro de version MAJEUR, car j'ai rajouté des fonctionnalités et apporté un correctif et cela a affecter l'expérience client qui maintenant doit donner moins d'informations pour le livre elle doit juste tout donner. De plus, ces anciennes requêtes ne sont plus compatibles avec le système, alors c'est un problème MAJEUR.
