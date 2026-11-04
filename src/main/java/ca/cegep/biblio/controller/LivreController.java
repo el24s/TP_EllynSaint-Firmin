@@ -82,7 +82,6 @@ public class LivreController {
     public Map<String, Object> fraisRetard(@PathVariable Long id, @RequestParam int joursRetard) {
         Livre livre = service.trouver(id);
         double frais = service.calculerFraisRetard(livre.getCategorie(), joursRetard);
-        // pt retour livre complet...?
         return Map.of("livreId", id, "joursRetard", joursRetard, "frais", frais);
     }
 }
